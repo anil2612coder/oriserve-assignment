@@ -6,6 +6,7 @@ import VersionDetail from "../components/VersionDetail";
 
 const VersionDetailPage = () => {
   const { name, version } = useParams();
+  console.log(name, version);
   const dispatch = useDispatch();
   const { versionDetails, loading, error } = useSelector((state) => state.npm);
 

@@ -6,7 +6,7 @@ import { fetchPackageDetails } from "../redux/npmSlice";
 const PackageDetail = () => {
   const { name } = useParams();
   const dispatch = useDispatch();
-  const { packageDetails, loading } = useSelector((state) => state.npm);
+  const { packageDetails, loading, error } = useSelector((state) => state.npm);
 
   useEffect(() => {
     dispatch(fetchPackageDetails(name));
@@ -17,6 +17,12 @@ const PackageDetail = () => {
       {loading ? (
         <div className="flex justify-center mt-4">
           <p className="text-lg text-gray-600">Loading package details...</p>
+        </div>
+      ) : error ? (
+        <div className="text-lg text-red-600">
+          <p>
+            Failed to load package details. Please try a different package name.
+          </p>
         </div>
       ) : packageDetails ? (
         <div className="max-w-4xl w-full bg-white p-8 rounded-2xl shadow-xl">

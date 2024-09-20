@@ -7,18 +7,31 @@ import VersionDetail from "../components/VersionDetail";
 const VersionDetailPage = () => {
   const { name, version } = useParams();
   const dispatch = useDispatch();
-  const { versionDetails } = useSelector((state) => state.npm);
+  const { versionDetails, loading, error } = useSelector((state) => state.npm);
 
   useEffect(() => {
     dispatch(fetchPackageVersion({ packageName: name, version }));
   }, [dispatch, name, version]);
 
   return (
-    <div>
-      {versionDetails ? (
+    <div className="p-8">
+      {loading && (
+        <p className="text-lg text-gray-600">Loading version details...</p>
+      )}
+      {error && (
+        <p className="text-lg text-red-600">
+          Failed to load version details. Please try again.
+        </p>
+      )}
+      {!loading && !error && versionDetails ? (
         <VersionDetail versionData={versionDetails} />
       ) : (
-        <p>Loading version details...</p>
+        !loading &&
+        !error && (
+          <p className="text-lg text-gray-600">
+            Version details not available.
+          </p>
+        )
       )}
     </div>
   );

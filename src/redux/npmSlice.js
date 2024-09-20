@@ -31,6 +31,7 @@ const npmSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Search Packages
       .addCase(searchPackages.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -43,11 +44,35 @@ const npmSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+      
+      // Fetch Package Details
+      .addCase(fetchPackageDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(fetchPackageDetails.fulfilled, (state, action) => {
+        state.loading = false;
         state.packageDetails = action.payload;
       })
+      .addCase(fetchPackageDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        state.packageDetails = null; // Reset packageDetails on error
+      })
+
+      // Fetch Version Details
+      .addCase(fetchPackageVersion.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(fetchPackageVersion.fulfilled, (state, action) => {
+        state.loading = false;
         state.versionDetails = action.payload;
+      })
+      .addCase(fetchPackageVersion.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        state.versionDetails = null; // Reset versionDetails on error
       });
   },
 });

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { fetchPackageDetails } from "../redux/npmSlice";
 
 const PackageDetail = () => {
@@ -45,12 +45,18 @@ const PackageDetail = () => {
                     key={version}
                     className="border-b border-gray-300 pb-2 last:border-none"
                   >
-                    <a
+                    {/* <a
                       href={`/package/${packageDetails.name}/${version}`}
                       className="text-lg text-violet-600 font-medium hover:text-violet-800"
                     >
                       {version} - View Details
-                    </a>
+                    </a> */}
+                    <Link
+                      to={`/package/${packageDetails.name}/${version}`}
+                      className="inline-block bg-violet-500 text-white text-sm font-medium py-2 px-4 rounded-md hover:bg-violet-600 transition-all"
+                    >
+                      Version {version} - View Details
+                    </Link>
                   </li>
                 ))}
             </ul>
